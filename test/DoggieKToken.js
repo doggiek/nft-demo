@@ -28,6 +28,7 @@ describe("DoggieKToken Contract", function () {
       expect(await token.balanceOf(owner.address)).to.equal(1);
       expect(await token.ownerOf(0)).to.equal(owner.address);
       expect(await token.tokenURI(0)).to.equal(uri);
+      expect(await token.getCreator(0)).to.equal(owner.address);
     });
   });
 });

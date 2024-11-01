@@ -12,6 +12,7 @@ import {
   Select,
   Space,
 } from "antd";
+import dayjs from "dayjs";
 import { CopyOutlined } from "@ant-design/icons";
 import { createAvatar } from "@dicebear/core";
 import { lorelei } from "@dicebear/collection";
@@ -101,9 +102,13 @@ const Wallet = () => {
     for (let i = 0; i < balance; i++) {
       const tokenId = await contractWithSigner.tokenOfOwnerByIndex(_account, i);
       const tokenURI = await contractWithSigner.tokenURI(tokenId);
+      const creator = await contractWithSigner.getCreator(tokenId);
+      const creationTime = await contractWithSigner.getCreationTime(tokenId);
       nfts.push({
         tokenId: tokenId.toString(),
         tokenURI: tokenURI.toString(),
+        creator: creator,
+        creationTime: creationTime,
       });
     }
     setNfts(nfts);
@@ -267,7 +272,19 @@ const Wallet = () => {
             <List.Item.Meta
               avatar={<Avatar src={item.tokenURI} />}
               title={<span>Token ID: {item.tokenId}</span>}
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              description={
+                <span>
+                  <Tooltip title="创作者" placement="top">
+                    {item.creator}
+                  </Tooltip>
+                  &nbsp;·&nbsp;
+                  <Tooltip title="铸造时间" placement="top">
+                    {dayjs(Number(item.creationTime) * 1000).format(
+                      "YYYY年MM月DD日 HH:mm:ss"
+                    )}
+                  </Tooltip>
+                </span>
+              }
             />
           </List.Item>
         )}
