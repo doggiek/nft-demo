@@ -23,9 +23,11 @@ describe("DoggieKToken Contract", function () {
 
   describe("Minting NFTs", function () {
     it("should mint an NFT and increment tokenCounter", async function () {
-      await token.safeMint(owner.address); // 给自己挖
+      const uri = "https://ui-avatars.com/api/name=DoggieK&background=random";
+      await token.safeMint(owner.address, uri); // 给自己挖
       expect(await token.balanceOf(owner.address)).to.equal(1);
       expect(await token.ownerOf(0)).to.equal(owner.address);
+      expect(await token.tokenURI(0)).to.equal(uri);
     });
   });
 });

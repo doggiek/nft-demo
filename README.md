@@ -11,3 +11,7 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.js
 ```
+
+### frontend(wallet) -> demo
+
+![local showcase](assets/img/showcase.png "showcase")
